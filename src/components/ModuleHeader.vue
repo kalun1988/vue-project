@@ -1,0 +1,20 @@
+<template>
+  <div class="module-header">
+    <h1>{{ name }}</h1>
+    <p>Header</p>
+      
+  </div>
+</template>
+
+<script>
+export default {
+  name: 'ModuleHeader',
+  props: {
+    name: String
+  }
+}
+</script>
+
+<!-- Add "scoped" attribute to limit CSS to this component only -->
+<style scoped lang="scss">
+</style>

@@ -2,6 +2,8 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import store from './store'
+// @ is an alias to /src
+import '@/assets/css/main.css'
 
 Vue.config.productionTip = false
 
