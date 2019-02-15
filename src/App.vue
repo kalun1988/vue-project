@@ -1,18 +1,17 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link> |
-      <router-link to="/srb">SRB</router-link>
-    </div>
-    <router-view/>
+    <b-container fluid>
+      <div id="nav">
+        <router-link to="/">Home</router-link> |
+        <router-link to="/about">About</router-link> |
+        <router-link to="/srb">SRB</router-link>
+      </div>
+      <router-view/>
+    </b-container>
   </div>
 </template>
 
 <style lang="scss">
-body{
-  background-color:pink;
-}
 @-webkit-keyframes placeHolderShimmer {
   0% {
     background-position: -468px 0;

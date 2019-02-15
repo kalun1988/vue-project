@@ -1,19 +1,42 @@
 <template>
     <div class="srb">
-        <div class="page-container">
-            <ModuleHeader name="SRB" />
-            <div class="m-content">
-                <div class="row">
-                    <div class="col-md-8 col-xl-8">
-                        <PinCanvas name="SRB FloorPlan" />
-                        <InfoBoard name="SRB Summary" />
-                    </div>
-                    <div class="col-md-4 col-xl-4">
-                        <ItemList name="SRB Bin List" />
-                    </div>
-                </div>
-            </div>
-        </div>
+        <b-row>
+            <b-col>
+                <module-header 
+                    name="SRB" 
+                    :buttons="
+                    [
+                        {
+                            label:'Edit Mode',
+                            style:'danger',
+                            visibleToAdmin: true,
+                            onClick: toggleEditMode
+                        },
+                        {
+                            label:'Create Floor',
+                            style:'outline-success',
+                            visibleToAdmin: true,
+                            onClick: createFloor
+                        },
+                        {
+                            label:'Remove Floor',
+                            style:'outline-danger',
+                            visibleToAdmin: true,
+                            onClick: removeFloor
+                        }
+                    ]"
+                />
+            </b-col>
+        </b-row>
+        <b-row>
+            <b-col cols="8">
+                <PinCanvas name="SRB FloorPlan" />
+                <InfoBoard name="SRB Summary" />
+            </b-col>
+            <b-col cols="4">
+                <ItemList name="SRB Bin List" />
+            </b-col>
+        </b-row>
         <div id="basic-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
@@ -67,6 +90,20 @@ export default {
   },
   props: {
     msg: String
+  },
+  methods: {
+    toggleEditMode(value){
+      console.log("toggleEditMode here");
+    },
+    createFloor(value){
+      console.log("create floor with name");
+    },
+    removeFloor(value){
+      console.log("remove floor id");
+    },
+    sampleFunction(value){
+      console.log("sample"+ value);
+    }
   }
 }
 </script>
