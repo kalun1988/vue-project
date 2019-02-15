@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Home from './views/Home.vue'
+import SRB from './views/SRB.vue'
 
 Vue.use(Router)
 
@@ -14,7 +15,7 @@ export default new Router({
     {
       path: '/srb',
       name: 'srb',
-      component: () => import('./views/SRB.vue')
+      component: SRB
     },
     {
       path: '/about',

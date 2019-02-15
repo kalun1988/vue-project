@@ -2,30 +2,15 @@
     <div class="srb">
         <b-row>
             <b-col>
-                <module-header 
-                    name="SRB" 
-                    :buttons="
-                    [
-                        {
-                            label:'Edit Mode',
-                            style:'danger',
-                            visibleToAdmin: true,
-                            onClick: toggleEditMode
-                        },
-                        {
-                            label:'Create Floor',
-                            style:'outline-success',
-                            visibleToAdmin: true,
-                            onClick: createFloor
-                        },
-                        {
-                            label:'Remove Floor',
-                            style:'outline-danger',
-                            visibleToAdmin: true,
-                            onClick: removeFloor
-                        }
-                    ]"
-                />
+                <h3>{{ module_name }}</h3>
+                <b-button-group>
+                    <b-button variant="danger" v-on:click="toggleEditMode">Edit Mode: ON</b-button>
+                    <b-button v-if="edit_mode" variant="outline-success" v-on:click="createArea">Create Area</b-button>
+                    <b-button v-if="edit_mode" variant="outline-danger" v-on:click="removeArea">Remove Area</b-button>
+                </b-button-group>
+                <b-dropdown right text="Select Area" variant="outline-primary">
+                    <b-dropdown-item v-for="area in areas" :key="area.id" v-on:click="selectArea(area.id)">{{ area.id }}</b-dropdown-item>
+                </b-dropdown>
             </b-col>
         </b-row>
         <b-row>
@@ -37,51 +22,20 @@
                 <ItemList name="SRB Bin List" />
             </b-col>
         </b-row>
-        <div id="basic-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <div class="m-portlet__head-tools">
-                            <ul class="m-portlet__nav">
-                                <li class="m-portlet__nav-item m-dropdown m-dropdown--inline m-dropdown--arrow m-dropdown--align-right m-dropdown--align-push" m-dropdown-toggle="hover" aria-expanded="true">
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="modal-body">
-                        <div class="m-scrollable" data-scrollbar-shown="true" data-scrollable="true">
-                            <div class="row">
-                                <div class="col-md-12 col-xl-12">
-                                    <InfoTable name="SRB Device Details" />
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-12 col-xl-12">
-                                    <LineChart name="SRB Timeline Chart" />
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    </div>
-                </div>
-            </div>
-        </div>
     </div>
 </template>
 <script>
 // @ is an alias to /src
-import ModuleHeader from '@/components/ModuleHeader.vue'
 import PinCanvas from '@/components/PinCanvas.vue'
 import InfoBoard from '@/components/InfoBoard.vue'
 import ItemList from '@/components/ItemList.vue'
 import InfoTable from '@/components/InfoTable.vue'
 import LineChart from '@/components/LineChart.vue'
+import {SRB_APIService} from '@/services/SRB_APIService';
+const apiService = new SRB_APIService('https://jsonplaceholder.typicode.com');
 export default {
   name: 'srb',
   components: {
-    ModuleHeader,
     PinCanvas,
     InfoBoard,
     ItemList,
@@ -91,18 +45,33 @@ export default {
   props: {
     msg: String
   },
+    data: function() {
+        return  {
+            edit_mode: false,
+            module_name:"SRB",
+            areas:[]
+        }
+    },
+  mounted: function(){
+    apiService.getAreas().then((response) => {
+        console.log(response.results)
+        
+        var response = JSON.parse(`{"count":1,"next":null,"previous":null,"results":[{"id":"ac4823d2","label":"abc"},{"id":"zzdfe","label":"def"}]}`);
+        this.areas = response.results;
+    })
+  },
   methods: {
     toggleEditMode(value){
-      console.log("toggleEditMode here");
+        console.log("toggleEditMode here");
     },
-    createFloor(value){
-      console.log("create floor with name");
+    createArea(value){
+      console.log("create area with name");
     },
-    removeFloor(value){
-      console.log("remove floor id");
+    removeArea(value){
+      console.log("remove area id");
     },
-    sampleFunction(value){
-      console.log("sample"+ value);
+    selectArea(area_id){
+      console.log(`selected area:${area_id}`);
     }
   }
 }
