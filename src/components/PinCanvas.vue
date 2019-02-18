@@ -1,8 +1,11 @@
 <template>
   <div class="pin-canvas">
-    <h1>{{ name }}</h1>
-    <p>Pin Canvas</p>
-      
+    <b-row>
+    <b-col cols="12">
+      <h1>{{ name }}</h1>
+      <b-img :src=image fluid/>
+    </b-col>
+    </b-row>
   </div>
 </template>
 
@@ -10,7 +13,8 @@
 export default {
   name: 'PinCanvas',
   props: {
-    name: String
+    name: String,
+    image: String
   }
 }
 </script>

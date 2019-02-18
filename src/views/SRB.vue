@@ -15,10 +15,17 @@
         </b-row>
         <b-row>
             <b-col cols="8">
-                <PinCanvas name="SRB FloorPlan" />
-                <info-table name="SRB Summary" />
-                <b-table hover 
-                    :items=api.rubbish_bins
+                <PinCanvas 
+                    name="SRB FloorPlan"
+                    image="http://ec2-52-77-106-230.ap-southeast-1.compute.amazonaws.com/iot_platform/media/floor_plan_img/evacdiagdone_RE4dqOe.jpg" 
+                />
+                <b-table stacked 
+                    :items="[
+                        {
+                            'No. of Bin': api.rubbish_bins.length,
+                            'Avg. Usage': 100/api.rubbish_bins.length + '%'
+                        }
+                    ]"
                 />
             </b-col>
             <b-col cols="4">
@@ -28,14 +35,20 @@
                 />
             </b-col>
         </b-row>
-        <b-modal id="modal1" ref="myModalRef" title="BootstrapVue">
+        <b-modal id="basic_modal" ref="myModalRef" title="BootstrapVue">
             <b-col cols="6">
-                <info-table name="SRB Info Table"/>
+                <b-table hover 
+                    :items=api.rubbish_bins
+                />
             </b-col>
             <b-col cols="6">
                 <img src="" />
             </b-col>
             <b-col cols="12">
+                <line-chart 
+                    name="SRB Line Chart"
+
+                />
             </b-col>
         </b-modal>
     </div>
@@ -43,9 +56,7 @@
 <script>
 // @ is an alias to /src
 import PinCanvas from '@/components/PinCanvas.vue'
-import InfoBoard from '@/components/InfoBoard.vue'
 import ItemList from '@/components/ItemList.vue'
-import InfoTable from '@/components/InfoTable.vue'
 import LineChart from '@/components/LineChart.vue'
 import {SRB_APIService} from '@/services/SRB_APIService';
 const apiService = new SRB_APIService('https://jsonplaceholder.typicode.com');
@@ -53,9 +64,7 @@ export default {
   name: 'srb',
   components: {
     PinCanvas,
-    InfoBoard,
     ItemList,
-    InfoTable,
     LineChart
   },
   props: {
@@ -83,7 +92,7 @@ export default {
                     }
                 ],
                 areas:[]
-            },
+            }
             
         }
     },
