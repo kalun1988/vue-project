@@ -1,16 +1,47 @@
 <template>
   <div id="app">
-    <b-container fluid>
-      <div id="nav">
-        <router-link to="/">Home</router-link> |
-        <router-link to="/about">About</router-link> |
-        <router-link to="/srb">SRB</router-link>
+    <vs-sidebar parent="body" default-index="1"  color="primary" class="sidebarx" spacer v-model="active">
+      <div class="header-sidebar" slot="header">
+        <vs-avatar  size="70px" src="https://randomuser.me/api/portraits/men/85.jpg"/>
+        <h4>
+          My Name
+          <vs-button color="primary" icon="more_horiz" type="flat"></vs-button>
+        </h4>
       </div>
+      <vs-sidebar-item index="1">
+        <router-link to="/">Home</router-link>
+      </vs-sidebar-item>
+      <vs-sidebar-item index="2">
+        <router-link to="/about">About</router-link>
+      </vs-sidebar-item>
+      <vs-sidebar-item index="3">
+        <router-link to="/srb">SRB</router-link>
+      </vs-sidebar-item>
+      <vs-sidebar-item index="5" >
+        <vs-button @click="active=false" color="primary" type="filled">Close Sidebar</vs-button>
+      </vs-sidebar-item>
+      <div class="footer-sidebar" slot="footer">
+        <vs-button icon="reply" color="danger" type="flat">log out</vs-button>
+        <vs-button icon="settings" color="primary" type="border"></vs-button>
+      </div>
+    </vs-sidebar>
+
+
+    <b-container fluid>
+      
+      <vs-button @click.stop="active=true" color="primary" type="filled">Open Sidebar</vs-button>
       <router-view/>
     </b-container>
   </div>
 </template>
 
+<script>
+export default {
+  data:()=>({
+    active:false,
+  })
+}
+</script>
 <style lang="scss">
 @-webkit-keyframes placeHolderShimmer {
   0% {

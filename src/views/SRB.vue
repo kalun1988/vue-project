@@ -1,20 +1,18 @@
 <template>
     <div class="srb">
-        <b-row>
-            <b-col>
+        <vs-row>
+            <vs-col>
                 <h3>{{ module_name }}</h3>
-                <b-button-group>
-                    <b-button variant="danger" v-on:click="toggleEditMode">Edit Mode: ON</b-button>
-                    <b-button v-if="edit_mode" variant="outline-success" v-on:click="createArea">Create Area</b-button>
-                    <b-button v-if="edit_mode" variant="outline-danger" v-on:click="removeArea">Remove Area</b-button>
-                </b-button-group>
+                    <vs-button color="danger" type="filled" v-on:click="toggleEditMode">Edit Mode: ON</vs-button>
+                    <vs-button v-if="edit_mode" color="success" type="border" v-on:click="createArea">Create Area</vs-button>
+                    <vs-button v-if="edit_mode" color="danger" type="border" v-on:click="removeArea">Remove Area</vs-button>
                 <b-dropdown right text="Select Area" variant="outline-primary">
                     <b-dropdown-item v-for="area in api.areas" :key="area.id" v-on:click="selectArea(area.id)">{{ area.id }}</b-dropdown-item>
                 </b-dropdown>
-            </b-col>
-        </b-row>
-        <b-row>
-            <b-col cols="8">
+            </vs-col>
+        </vs-row>
+        <vs-row>
+            <vs-col vs-w="8">
                 <PinCanvas 
                     name="SRB FloorPlan"
                     image="http://ec2-52-77-106-230.ap-southeast-1.compute.amazonaws.com/iot_platform/media/floor_plan_img/evacdiagdone_RE4dqOe.jpg" 
@@ -27,30 +25,35 @@
                         }
                     ]"
                 />
-            </b-col>
-            <b-col cols="4">
+            </vs-col>
+            <vs-col vs-w="4">
                 <item-list name="SRB Bin List"
                     :items=api.rubbish_bins
                      @onClickedItem="showBinDetails"
                 />
-            </b-col>
-        </b-row>
-        <b-modal id="basic_modal" ref="myModalRef" title="BootstrapVue">
-            <b-col cols="6">
+            </vs-col>
+        </vs-row>
+        <vs-popup fullscreen title="fullscreen" :active.sync="popupActivo4">
+            
+        <vs-row>
+            <vs-col vs-w="6">
                 <b-table hover 
                     :items=api.rubbish_bins
                 />
-            </b-col>
-            <b-col cols="6">
+            </vs-col>
+            <vs-col vs-w="6">
                 <img src="" />
-            </b-col>
-            <b-col cols="12">
+            </vs-col>
+        </vs-row>
+        <vs-row>
+            <vs-col vs-w="12">
                 <line-chart 
                     name="SRB Line Chart"
-
                 />
-            </b-col>
-        </b-modal>
+            </vs-col>
+        </vs-row>
+
+        </vs-popup>
     </div>
 </template>
 <script>
@@ -72,7 +75,8 @@ export default {
   },
     data: function() {
         return  {
-            edit_mode: false,
+            edit_mode: true,
+            popupActivo4:false,
             module_name:"SRB",
             api:{
                 rubbish_bins:[
@@ -124,7 +128,7 @@ export default {
     },
     showBinDetails(bin_id, index){
         console.log("show modal content" + bin_id + "index:"+ index);
-        this.$refs.myModalRef.show()
+        this.popupActivo4=true;
     }
   },
 }
